@@ -2,12 +2,12 @@
 #   Julia http democlient
 #
 #------------------------------------------------------------------------------
-
-http_client = dlopen("curlclient")
+http_client = dlopen("libcurlclient")
 
 
 function http_get(url)
-    response =  ccall(http_client, Ptr{Uint8}, (Ptr{Uint8}, ), url)
+    response =  ccall(dlsym(http_client, :get), 
+        Ptr{Uint8}, (Ptr{Uint8}, ), url)
     print(cstring(response))
     return cstring(convert(Ptr{Uint8}, response))
 end

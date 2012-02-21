@@ -2,10 +2,10 @@
 
 #variables
 CC=gcc
-CFLAGS=-c -g -shared -Wall -I/usr/local/include
-LDFLAGS=-L/usr/local/lib -lcurl -fPIC
-SOURCES=curlclient.c
-OBJECTS=$(SOURCES:.c=.o)
+CFLAGS=-c -Wall -I/usr/local/include
+LDFLAGS=-L/usr/local/lib -lcurl
+SOURCES=c/curlclient.c
+OBJECTS=curlclient.o
 EXECUTABLE=curlclient
 
 all: $(SOURCES) $(EXECUTABLE) 
@@ -17,8 +17,8 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(CFLAGS) $< -o $@
 
 shared:
-	$(CC) -O -Wl,-soname,curlclient.so -o curlcient.so  $(OBJECTS) $(LDFLAGS)
-	$(CC)  $(CFLAGS)  -o curlclient.so  $(OBJECTS)
+	$(CC) -c -Bsymbolic -fPIC $(SOURCES) -I/usr/local/include
+	$(CC) -shared -o libcurlclient.so $(OBJECTS) -L/usr/local/lib -lcurl
 
 clean:
 	rm -rf *o $(EXECUTABLE)
