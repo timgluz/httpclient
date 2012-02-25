@@ -16,7 +16,8 @@ end
 
 function http_get(request)
     #makes GET request
-    #TODO: finish it
+    url = build_uri(request)
+
     response =  ccall(dlsym(http_client, :get), 
         Ptr{Uint8}, (Ptr{Uint8}, ), url)
     print(cstring(response))

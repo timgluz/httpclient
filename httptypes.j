@@ -9,6 +9,18 @@
 #   objects.
 #------------------------------------------------------------------------------
 
+type URIScheme
+    #HTTP scheme: scheme://host:port/path?searchpart
+    #/;? are reserved in path, seachpart
+    scheme      :: String
+    domain      :: String
+    port        :: Int #default value is 80
+    path        :: Tuple
+    query       :: Tuple
+    fragment    :: String #TODO: which types it can take
+end
+
+
 type Request
     url                    :: String    #address
     method                 :: String    #string of request method
@@ -18,6 +30,8 @@ type Request
 
     Request(url :: String) = new(url, "GET", (), (), false)
     Request(url :: String,method :: String) = new(url, method, (), (), false) 
+    Request(url :: String, params :: Tuple) = new(url, "GET", params, (), false)
+
     function Request(url, method, params, data, allow_redirects)
         
         new(url, method, params, data, allow_redirects)
