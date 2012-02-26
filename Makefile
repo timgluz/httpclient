@@ -4,14 +4,16 @@
 CC=gcc
 CFLAGS=-c -Wall -I/usr/local/include
 LDFLAGS=-L/usr/local/lib -lcurl
-SOURCES=c/curlclient.c c/sockets.c
+SOURCES=c/curlclient.c
 OBJECTS=curlclient.o
 EXECUTABLE=curlclient
 
-all: $(SOURCES) $(EXECUTABLE) 
-
-$(EXECUTABLE): $(OBJECTS)
+$(EXECUTABLE):
+	$(CC) $(CFLAGS) $(SOURCES)
 	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+
+
+#$(EXECUTABLE): $(OBJECTS)
 
 .c .o: 
 	$(CC) $(CFLAGS) $< -o $@
